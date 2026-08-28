@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>🌀 MÄRCHEN-SPHÄRE · 3x3 · TRIPLE-PARALLEL</title>
+<style>
+  body { background:#000; color:#0f0; font-family:Consolas; padding:20px; }
+  .grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; }
+  .card { background:#111; border:1px solid #333; padding:15px; border-radius:8px; }
+  h2 { color:#ffaa00; font-size:14px; }
+  h3 { color:#00ccff; font-size:11px; }
+  button { background:#222; color:#fff; border:1px solid #555; padding:5px 10px; margin:5px; cursor:pointer; }
+  pre { background:#000; border-left:3px solid #6cf; padding:10px; white-space:pre-wrap; font-size:10px; }
+</style>
+</head>
+<body>
+
+<h1>🌀 MÄRCHEN-SPHÄRE · 3x3 · TRIPLE-PARALLEL</h1>
+<p>3 unabhängige Märchen · 3 Sprachen · 4 Etappen · Künstler + Wissenschaftler · ZEIT/ORT/USE/USER</p>
+
+<div class="grid" id="maerchenGrid"></div>
+
+<script>
+// ============================================================
+// KONFIGURATION: 3 Märchen, 3 Sprachen, 4 Etappen
+// ============================================================
+const SYSTEM = {
+    kalender: 0,          // Epochen-Zähler
+    epoche: "Neuland",     // Name der Epoche
+    land: "Nebelwald",     // Land (nicht physischer Ort, sondern Zustand)
+    stand: "Schwelle",     // Stand (nicht physischer Ort, sondern Phase)
+    aktuelleZeit: 0
+};
+
+// 3 Märchen (unabhängig!)
+const MAERCHEN = [
+    {
+        id: 1,
+        titel: "Die Uhrmacherin der Ewigkeit",
+        sprache: "Deutsch",
+        stil: "Alfred Hitchcock Charm",
+        etappen: [
+            { name: "Etappe 1: Das Erwachen", kuenstler: "Der Maler des Lichts", wissenschaftler: "Die Physikerin der Zeit" },
+            { name: "Etappe 2: Die Verfolgung", kuenstler: "Die Tänzerin der Schatten", wissenschaftler: "Der Logiker der Räume" },
+            { name: "Etappe 3: Die Offenbarung", kuenstler: "Der Sänger der Stille", wissenschaftler: "Die Chemikerin der Stoffe" },
+            { name: "Etappe 4: Die Rückkehr", kuenstler: "Die Bildhauerin der Formen", wissenschaftler: "Der Astronom der Pfade" }
+        ],
+        reime: [
+            "Tick tack, die Stunde bricht, im Nebel wandert das Licht.",
+            "Schatten fliehen durch das Tor, die Zeit zerbricht ihr Ohr."
+        ],
+        freiNutzbar: true
+    },
+    {
+        id: 2,
+        titel: "Die Schatten der Synapsen",
+        sprache: "Englisch",
+        stil: "Lisa Eckardt Trefflichkeit",
+        etappen: [
+            { name: "Etappe 1: The Signal", kuenstler: "The Painter of Dreams", wissenschaftler: "The Mathematician of Chaos" },
+            { name: "Etappe 2: The Chase", kuenstler: "The Dancer of Shadows", wissenschaftler: "The Philosopher of Logic" },
+            { name: "Etappe 3: The Awakening", kuenstler: "The Singer of Frost", wissenschaftler: "The Biologist of Cells" },
+            { name: "Etappe 4: The Return", kuenstler: "The Sculptor of Waves", wissenschaftler: "The Geologist of Time" }
+        ],
+        reime: [
+            "Clock tick, the light does bend, shadows never end.",
+            "Dreams collide in silent flight, truth awakes in night."
+        ],
+        freiNutzbar: true
+    },
+    {
+        id: 3,
+        titel: "Der Golem der Datenströme",
+        sprache: "Spanisch",
+        stil: "Frei nutzbare Reim-Märchen",
+        etappen: [
+            { name: "Etappe 1: El Despertar", kuenstler: "El Pintor de Sueños", wissenschaftler: "La Física del Caos" },
+            { name: "Etappe 2: La Persecución", kuenstler: "La Bailarina de Sombras", wissenschaftler: "El Lógico de Espacios" },
+            { name: "Etappe 3: La Revelación", kuenstler: "El Cantante de Hielo", wissenschaftler: "La Química de la Vida" },
+            { name: "Etappe 4: El Regreso", kuenstler: "La Escultora de Formas", wissenschaftler: "El Astrónomo del Tiempo" }
+        ],
+        reime: [
+            "Tic tac, la luz se va, el sueño nunca está.",
+            "Sombras cruzan el portal, el tiempo late en su cristal."
+        ],
+        freiNutzbar: true
+    }
+];
+
+// ============================================================
+// ENGINE: Rendert die 3 Märchen
+// ============================================================
+function renderMaerchen() {
+    const grid = document.getElementById('maerchenGrid');
+    grid.innerHTML = '';
+    
+    MAERCHEN.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        
+        let etappenHTML = '';
+        m.etappen.forEach((e, i) => {
+            etappenHTML += `
+                <div style="border-left:2px solid #00ccff; padding-left:8px; margin:8px 0;">
+                    <h3>${e.name}</h3>
+                    <p style="font-size:10px; color:#ffaa00;">🎨 Künstler: ${e.kuenstler}</p>
+                    <p style="font-size:10px; color:#00ff88;">🔬 Wissenschaftler: ${e.wissenschaftler}</p>
+                </div>
+            `;
+        });
+        
+        card.innerHTML = `
+            <h2>🌀 ${m.titel} (${m.sprache})</h2>
+            <p style="font-size:9px; color:#ff66ff;">Stil: ${m.stil} | Frei nutzbar: ${m.freiNutzbar ? '✔ Ja' : '✘ Nein'}</p>
+            <div style="margin:10px 0;">
+                <p style="color:#ffd700; font-style:italic; font-size:10px;">"${m.reime[0]}"</p>
+                <p style="color:#ffd700; font-style:italic; font-size:10px;">"${m.reime[1]}"</p>
+            </div>
+            ${etappenHTML}
+            <div style="margin-top:10px; font-size:9px; color:#8ab8e6;">
+                <b>LAND:</b> ${SYSTEM.land} | <b>STAND:</b> ${SYSTEM.stand} | <b>EPOCHE:</b> ${SYSTEM.epoche}
+            </div>
+        `;
+        
+        grid.appendChild(card);
+    });
+}
+
+// ============================================================
+// EPOCHE / KALENDER: Zeit-Engine für 3 Läufe
+// ============================================================
+function advanceEpoche() {
+    SYSTEM.kalender++;
+    if (SYSTEM.kalender % 3 === 0) SYSTEM.epoche = "Kristallzeit";
+    if (SYSTEM.kalender % 3 === 1) SYSTEM.epoche = "Nebelzeit";
+    if (SYSTEM.kalender % 3 === 2) SYSTEM.epoche = "Feuerzeit";
+    
+    // Land / Stand ändern sich, aber kein physischer Ort
+    if (SYSTEM.kalender % 2 === 0) SYSTEM.land = "Silberwald";
+    else SYSTEM.land = "Nebelwald";
+    
+    if (SYSTEM.kalender % 4 === 0) SYSTEM.stand = "Schwelle der Wahrheit";
+    else SYSTEM.stand = "Rand der Zeit";
+    
+    log(`⏳ Epoche ${SYSTEM.kalender}: ${SYSTEM.epoche} · Land: ${SYSTEM.land} · Stand: ${SYSTEM.stand}`);
+    renderMaerchen();
+}
+
+function log(msg) {
+    const div = document.createElement('div');
+    div.textContent = msg;
+    div.style.color = "#ffaa00";
+    div.style.fontSize = "10px";
+    document.body.appendChild(div);
+}
+
+// INIT
+renderMaerchen();
+log('🌀 3 Märchen in 3 Sprachen geladen. System bereit.');
+log('⏳ Epoche 0: Neuland · Land: Nebelwald · Stand: Schwelle');
+</script>
+
+</body>
+</html>
