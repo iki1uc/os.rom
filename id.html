@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>os.rom — id.html — iki1uc</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#000;color:#fff;font-family:monospace;padding:24px}
+  .box{max-width:720px;margin:0 auto;border:2px solid #ffd700;padding:24px}
+  h1{color:#ffd700;margin:0 0 8px;font-size:28px}
+  .id{background:#111;border:1px solid #ffd700;padding:12px;font-size:18px;word-break:break-all}
+  .row{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+  .card{flex:1;min-width:180px;border:1px solid #444;padding:12px}
+  .card b{color:#ffd700}
+  .gold{color:#ffd700}.green{color:#3dff7a}.grey{color:#999}
+  code{background:#111;padding:2px 6px}
+  button{background:#ffd700;color:#000;border:0;padding:10px 16px;font-family:monospace;font-weight:900;cursor:pointer;margin-top:16px}
+  #log{margin-top:16px;background:#111;padding:12px;min-height:48px;white-space:pre-wrap}
+  a{color:#ffd700}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>os.rom — iki1uc</h1>
+  <p>ID — ALL-Stempel. Einmal gesetzt. Bleibt.</p>
+
+  <div class="id" id="repoId">os.rom / iki1uc</div>
+
+  <div class="row">
+    <div class="card"><b>REPO</b><br>os.rom</div>
+    <div class="card"><b>EIGNER</b><br>iki1uc / wieimmer4u</div>
+    <div class="card"><b>STAND</b><br><span class="grey">vol.1 = alt</span><br><span class="gold">vol.2 = davor</span><br><span class="green">index = neuester</span></div>
+  </div>
+
+  <div class="row">
+    <div class="card"><b>ANKER</b><br>A01 S01 D4<br>STATE STABIL</div>
+    <div class="card"><b>HOME / MITTE</b><br>HOME 40<br>MITTE 41<br><code>41 → home() → 40</code></div>
+    <div class="card"><b>REGEL</b><br>Geschlossen bleibt geschlossen.<br>Nur angehängt.<br>Nichts gelöscht.</div>
+  </div>
+
+  <div class="row">
+    <div class="card"><b>DATEIEN</b><br>
+      vol.1.html — ALT · FEST<br>
+      vol.2.html — DAVOR · FEST<br>
+      index.html — NEUESTER · OFFEN<br>
+      MOVE.html — BEWEGUNG<br>
+      id.html — DIESER STEMPEL
+    </div>
+    <div class="card"><b>HALT</b><br>HALT = ZIEL nur abgeleitet,<br>sonst OFFEN.<br><br>Pentagramm = Schalter,<br>nicht Deko.<br>81 bleibt 81.</div>
+  </div>
+
+  <button onclick="stempel()">ID STEMPELN</button>
+  <button onclick="copyId()">ID KOPIEREN</button>
+
+  <div id="log">Bereit — ID STEMPELN schreibt ins Log.</div>
+
+  <p style="margin-top:16px;color:#999">
+    LICENSE-CLOSED — Eigentum iki1uc / wieimmer4u<br>
+    Nicht kommerziell, nicht Weitergabe ohne Genehmigung.<br><br>
+    SO = SO · FINAL = FINAL · HALT = ZIEL
+  </p>
+</div>
+
+<script>
+const ID = "os.rom / iki1uc";
+function log(m){
+  document.getElementById("log").textContent =
+    new Date().toLocaleTimeString() + " — " + m;
+}
+function stempel(){
+  log("STEMPEL: " + ID + " — ANKER A01 S01 D4 STABIL — HOME 40 — HALT = ZIEL");
+}
+function copyId(){
+  navigator.clipboard.writeText(ID).then(
+    ()=>log("KOPIERT: " + ID),
+    ()=>log("KOPIEREN: " + ID + " — von Hand kopieren")
+  );
+}
+log("id.html geladen — ID: " + ID);
+</script>
+</body>
+</html>
